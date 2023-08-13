@@ -1,0 +1,122 @@
+data "aws_caller_identity" "current" {}
+data "aws_region" "current" {}
+#example granular feature policy
+data "aws_iam_policy_document" "product_security_ec2" {
+  statement {
+    sid       = "EC2permissions"
+    effect    = "Allow"
+    resources = ["*"]
+
+    actions = [
+      "ec2:AuthorizeSecurityGroupIngress",
+      "ec2:DescribeInstances",
+      "ec2:GetIpamResourceCidrs",
+      "ec2:GetInstanceUefiData",
+      "ec2:GetIpamPoolCidrs",
+      "ec2:GetEbsEncryptionByDefault",
+      "ec2:ExportClientVpnClientConfiguration",
+      "ec2:DescribeVolumesModifications",
+      "ec2:GetHostReservationPurchasePreview",
+      "ec2:GetConsoleScreenshot",
+      "ec2:UpdateSecurityGroupRuleDescriptionsIngress",
+      "ec2:GetLaunchTemplateData",
+      "ec2:DescribeVolumeStatus",
+      "ec2:GetSerialConsoleAccessStatus",
+      "ec2:StartInstances",
+      "ec2:RevokeSecurityGroupEgress",
+      "ec2:DescribeVolumes",
+      "ec2:GetEbsDefaultKmsKeyId",
+      "ec2:GetIpamDiscoveredResourceCidrs",
+      "ec2:DetachVolume",
+      "ec2:ModifyVolume",
+      "ec2:UpdateSecurityGroupRuleDescriptionsEgress",
+      "ec2:GetManagedPrefixListEntries",
+      "ec2:CreateTags",
+      "ec2:GetNetworkInsightsAccessScopeContent",
+      "ec2:ModifySecurityGroupRules",
+      "ec2:DescribeVerifiedAccessInstances",
+      "ec2:StopInstances",
+      "ec2:GetReservedInstancesExchangeQuote",
+      "ec2:DescribeVolumeAttribute",
+      "ec2:CreateVolume",
+      "ec2:EnableVolumeIO",
+      "ec2:RevokeSecurityGroupIngress",
+      "ec2:GetPasswordData",
+      "ec2:GetInstanceTypesFromInstanceRequirements",
+      "ec2:GetAssociatedIpv6PoolCidrs",
+      "ec2:GetSpotPlacementScores",
+      "ec2:DescribeInstanceTypes",
+      "ec2:GetAwsNetworkPerformanceData",
+      "ec2:GetIpamDiscoveredAccounts",
+      "ec2:AttachVolume",
+      "ec2:GetResourcePolicy",
+      "ec2:GetDefaultCreditSpecification",
+      "ec2:ImportVolume",
+      "ec2:DescribeInstanceAttribute",
+      "ec2:GetCapacityReservationUsage",
+      "ec2:GetNetworkInsightsAccessScopeAnalysisFindings",
+      "ec2:GetSubnetCidrReservations",
+      "ec2:GetConsoleOutput",
+      "ec2:ExportClientVpnClientCertificateRevocationList",
+      "ec2:DescribeVerifiedAccessInstanceLoggingConfigurations",
+      "ec2:GetFlowLogsIntegrationTemplate",
+      "ec2:CreateSecurityGroup",
+      "ec2:DescribeInstanceStatus",
+      "ec2:AuthorizeSecurityGroupEgress",
+      "ec2:GetCoipPoolUsage",
+      "ec2:DescribeReplaceRootVolumeTasks",
+      "ec2:DescribeInstanceEventNotificationAttributes",
+      "ec2:GetAssociatedEnclaveCertificateIamRoles",
+      "ec2:GetIpamAddressHistory",
+      "ec2:DescribeHosts",
+      "ec2:GetVerifiedAccessInstanceWebAcl",
+      "ec2:DeleteSecurityGroup",
+      "ec2:GetManagedPrefixListAssociations",
+    ]
+
+    condition {
+      test     = "ForAllValues:StringEquals"
+      variable = "ec2:ResourceTag/domain"
+      values   = ["ITsecurity"]
+    }
+  }
+}
+data "aws_iam_policy_document" "product_security_ram" {
+  statement {
+    sid       = "RAM_allowed_remissuins"
+    effect    = "Allow"
+    resources = ["*"]
+
+    actions = [
+      "ram:AcceptResourceShareInvitation",
+      "ram:ListPermissionVersions",
+      "ram:GetResourcePolicies",
+      "ram:GetResourceShareInvitations",
+      "ram:GetPermission",
+      "ram:GetResourceShares",
+      "ram:CreatePermission",
+      "ram:ListResourceTypes",
+      "ram:DeletePermissionVersion",
+      "ram:ReplacePermissionAssociations",
+      "ram:SetDefaultPermissionVersion",
+      "ram:DisassociateResourceShare",
+      "ram:DisassociateResourceSharePermission",
+      "ram:ListReplacePermissionAssociationsWork",
+      "ram:GetResourceShareAssociations",
+      "ram:CreatePermissionVersion",
+      "ram:DeletePermission",
+      "ram:AssociateResourceSharePermission",
+      "ram:ListResources",
+      "ram:ListResourceSharePermissions",
+      "ram:ListPermissions",
+      "ram:ListPermissionAssociations",
+      "ram:RejectResourceShareInvitation",
+      "ram:ListPrincipals",
+      "ram:ListPendingInvitationResources",
+      "ram:TagResource",
+      "ram:AssociateResourceShare",
+      "ram:UntagResource",
+      "ram:UpdateResourceShare",
+    ]
+  }
+}
